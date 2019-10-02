@@ -1,4 +1,5 @@
 const fs = require('fs');
+const {EOL} = require('os');
 
 
 
@@ -19,7 +20,7 @@ let decode =()=>{
 
 let encode = ()=>{
 	let data = fs.readFileSync(process.argv[3]).toString('utf-8');
-	let toHide = fs.readFileSync(process.argv[4]).toString('utf-8').split('\n');
+	let toHide = fs.readFileSync(process.argv[4]).toString('utf-8').split(EOL);
 	data = dataToWhite(data);
 	let hider;
 	toHide = trimHider(toHide);
@@ -28,8 +29,8 @@ let encode = ()=>{
 
 
 let locate = (data) => {
-	let output = "";
-	data.split('\n').map((m,j)=>{
+	let output = Buffer.from([]);
+	data.split(EOL).map((m,j)=>{
 		let character = "";
 		let split = [...m];
 		let found = false;
@@ -40,7 +41,7 @@ let locate = (data) => {
 			else break;
 		}
 		//if(character) console.log([...character].map(m=>m ==='\t'?'0':'1').join(''),j)
-		if(character) output += String.fromCharCode(parseInt([...character].reverse().map(m=>m ==='\t'?'0':'1').join(''),2));
+		if(character) output = Buffer.concat([output,Buffer.from([(parseInt([...character].reverse().map(m=>m ==='\t'?'0':'1').join(''),2))])]);
 	});
 	return output;
 }
@@ -48,7 +49,7 @@ let locate = (data) => {
 let hide = (data,secret)=>{
 	return data = data.map((d,i)=>{
 		return d + (secret[i]?secret[i]:'');
-	}).join('\n');
+	}).join(EOL);
 }
 
 let padBinary = bin=>{
