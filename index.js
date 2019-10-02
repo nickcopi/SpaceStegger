@@ -19,12 +19,12 @@ let decode =()=>{
 }
 
 let encode = ()=>{
-	let data = fs.readFileSync(process.argv[3]).toString('utf-8');
-	let toHide = fs.readFileSync(process.argv[4]).toString('utf-8').split(EOL);
-	data = dataToWhite(data);
-	let hider;
-	toHide = trimHider(toHide);
-	fs.writeFileSync('secret',hide(toHide,data));
+	let secret = fs.readFileSync(process.argv[3]).toString('utf-8');
+	let body = fs.readFileSync(process.argv[4]).toString('utf-8').split(EOL);
+	if(secret.length > body.length) return console.log('Secret must be shorter or equal to length of body',body,secret.length);
+	secret = dataToWhite(secret);
+	toHide = trimHider(body);
+	fs.writeFileSync('secret',hide(toHide,secret));
 }
 
 
@@ -46,8 +46,8 @@ let locate = (data) => {
 	return output;
 }
 
-let hide = (data,secret)=>{
-	return data = data.map((d,i)=>{
+let hide = (body,secret)=>{
+	return body = body.map((d,i)=>{
 		return d + (secret[i]?secret[i]:'');
 	}).join(EOL);
 }
