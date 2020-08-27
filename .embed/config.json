@@ -1,0 +1,6 @@
+{
+	"name":"Space stegfuscator",
+	"tags":["Cyber","Tools"],
+	"description":"Obfuscate and steg invisible Javascript in the whitespace at the end of the lines of an existing file.",
+	"date":"October 2019"
+}
